@@ -55,10 +55,10 @@ int* rast_triangle(int x_resolution, int y_resolution, int *buf, int tri[3][2], 
     return buf;
 }
 
-int main() {
+int main(void) {
     const int x_resolution = 1920;
     const int y_resolution = 1080;
-    int tri0[3][2] = {{0, 0}, {10, 0}, {0, 10}};
+    int tri0[3][2] = {{0, 0}, {1920, 1080}, {0, 1080}};
     int buf[x_resolution * y_resolution];
     for (int i = 0; i <(x_resolution * y_resolution); i++) {
         buf[i] = 0;
@@ -74,12 +74,7 @@ int main() {
         return -1;
     }
     ioctl(ttyfd, KDSETMODE, KD_GRAPHICS);
-    for (int j = 0; j < 192; j++) {
-        rast_triangle(x_resolution, y_resolution, buf, tri0, 0x00f38ba8);
-        for (int k = 0; k < 3; k++) {
-            tri0[k][0] = tri0[k][0] + 10;
-        }
-    }
+    rast_triangle(x_resolution, y_resolution, buf, tri0, 0x00f38ba8);
     write(fbfd, buf, 4 * (x_resolution * y_resolution));
     sleep(5);
     ioctl(ttyfd, KDSETMODE, KD_TEXT);
