@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include "badlinkedlist.h"
 
+
+
 typedef struct node {
     struct node *prev;
     int data;
